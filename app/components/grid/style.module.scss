@@ -1,0 +1,259 @@
+/* Imports
+---------------------------------------------------------------------------------------------------- */
+@use '../../scss/variables' as v;
+
+
+
+/* Responsive sizes mixin
+---------------------------------------------------------------------------------------------------- */
+@mixin responsiveSizes($name, $value) {
+	.#{$name}_#{$value} {
+		@content;
+	}
+
+	@media (min-width: v.$breakpoint_xxl - 1px) {
+		.#{$name}_xxxl_#{$value} {
+			@content;
+		}
+	}
+
+	.#{$name}_xxl_#{$value} {
+		@media ((max-width: v.$breakpoint_xxl) and (min-width: v.$breakpoint_xl - 1px)) {
+			@content;
+		}
+	}
+
+	.#{$name}_xl_#{$value} {
+		@media ((max-width: v.$breakpoint_xl) and (min-width: v.$breakpoint_l - 1px)) {
+			@content;
+		}
+	}
+
+	.#{$name}_l_#{$value} {
+		@media ((max-width: v.$breakpoint_l) and (min-width: v.$breakpoint_m - 1px)) {
+			@content;
+		}
+	}
+
+	.#{$name}_m_#{$value} {
+		@media ((max-width: v.$breakpoint_m) and (min-width: v.$breakpoint_s - 1px)) {
+			@content;
+		}
+	}
+
+	.#{$name}_s_#{$value} {
+		@media ((max-width: v.$breakpoint_s) and (min-width: v.$breakpoint_xs - 1px)) {
+			@content;
+		}
+	}
+
+	.#{$name}_xs_#{$value} {
+		@media ((max-width: v.$breakpoint_xs) and (min-width: v.$breakpoint_xxs - 1px)) {
+			@content;
+		}
+	}
+
+	.#{$name}_xxs_#{$value} {
+		@media ((max-width: v.$breakpoint_xxs) and (min-width: v.$breakpoint_xxxs - 1px)) {
+			@content;
+		}
+	}
+
+	.#{$name}_xxxs_#{$value} {
+		@media (max-width: v.$breakpoint_xxxs) {
+			@content;
+		}
+	}
+}
+
+
+
+/* Grid Component
+---------------------------------------------------------------------------------------------------- */
+.component_grid {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+
+/* Align
+-------------------------------------------------- */
+@include responsiveSizes('align', 'left') {
+	justify-content: flex-start;
+}
+
+@include responsiveSizes('align', 'center') {
+	justify-content: center;
+}
+
+@include responsiveSizes('align', 'right') {
+	justify-content: flex-end;
+}
+
+
+/* Column gap
+Please note: This also defines the sizes of the Item component IF they're sized using a number between 1 and 12.
+The reason for this is because we need to take into account the column gap size.
+-------------------------------------------------- */
+@mixin colSizeByNumber($colSize, $colGap: 0) {
+	// Get the $colSize as a percentage of 12
+	$percentageOf12_number: calc((100 / 12) * $colSize);
+	$percentageOf12_percent: #{$percentageOf12_number} + '%';
+
+	// By default our column width is simply this percentage of 12
+	$columnWidth: $percentageOf12_percent;
+
+	// But if there's a column gap to account for
+	@if ($colGap > 0) {
+		// Work out the $colGap as a percentage of 12 as well
+		$colGapPercentage: calc(($colGap / 100) * $percentageOf12_number);
+
+		// Setup the column width (this is a little complex...)
+		// Start with the column as a percentage of 12 ($percentageOf12)
+		// MINUS the column gap ($colGap)
+		// MINUS the same percentage of the column gap ($colGapPercentage)
+		$columnWidth: calc($percentageOf12_percent - $colGap + $colGapPercentage);
+	}
+
+	// Output the correct column width
+	flex-basis: $columnWidth;
+	flex-grow: 0;
+	flex-shrink: 0;
+	min-width: $columnWidth;
+}
+
+@mixin colGapSizes($colSize, $colGap) {
+	@include responsiveSizes('colGap', $colSize) {
+		column-gap: $colGap;
+
+		@include responsiveSizes('size', '1') {
+			@include colSizeByNumber(1, $colGap);
+		}
+
+		@include responsiveSizes('size', '2') {
+			@include colSizeByNumber(2, $colGap);
+		}
+
+		@include responsiveSizes('size', '3') {
+			@include colSizeByNumber(3, $colGap);
+		}
+
+		@include responsiveSizes('size', '4') {
+			@include colSizeByNumber(4, $colGap);
+		}
+
+		@include responsiveSizes('size', '5') {
+			@include colSizeByNumber(5, $colGap);
+		}
+
+		@include responsiveSizes('size', '6') {
+			@include colSizeByNumber(6, $colGap);
+		}
+
+		@include responsiveSizes('size', '7') {
+			@include colSizeByNumber(7, $colGap);
+		}
+
+		@include responsiveSizes('size', '8') {
+			@include colSizeByNumber(8, $colGap);
+		}
+
+		@include responsiveSizes('size', '9') {
+			@include colSizeByNumber(9, $colGap);
+		}
+
+		@include responsiveSizes('size', '10') {
+			@include colSizeByNumber(10, $colGap);
+		}
+
+		@include responsiveSizes('size', '11') {
+			@include colSizeByNumber(11, $colGap);
+		}
+
+		@include responsiveSizes('size', '12') {
+			@include colSizeByNumber(12, $colGap);
+		}
+	}
+}
+
+@include colGapSizes('xl', v.$gap_5);
+@include colGapSizes('l', v.$gap_4);
+@include colGapSizes('m', v.$gap_3);
+@include colGapSizes('s', v.$gap_2);
+@include colGapSizes('xs', v.$gap_1);
+
+
+/* Row gap
+-------------------------------------------------- */
+@include responsiveSizes('rowGap', 'xl') {
+	row-gap: v.$gap_5;
+
+	& + .component_grid {
+		margin-top: v.$gap-5;
+	}
+}
+
+@include responsiveSizes('rowGap', 'l') {
+	row-gap: v.$gap_4;
+
+	& + .component_grid {
+		margin-top: v.$gap-4;
+	}
+}
+
+@include responsiveSizes('rowGap', 'm') {
+	row-gap: v.$gap_3;
+
+	& + .component_grid {
+		margin-top: v.$gap-3;
+	}
+}
+
+@include responsiveSizes('rowGap', 's') {
+	row-gap: v.$gap_2;
+
+	& + .component_grid {
+		margin-top: v.$gap-2;
+	}
+}
+
+@include responsiveSizes('rowGap', 'xs') {
+	row-gap: v.$gap_1;
+
+	& + .component_grid {
+		margin-top: v.$gap-1;
+	}
+}
+
+
+
+/* Item Component
+---------------------------------------------------------------------------------------------------- */
+.component_item {
+}
+
+
+/* Size - Grow
+-------------------------------------------------- */
+@include responsiveSizes('size', 'grow') {
+	flex-grow: 1;
+	flex-shrink: 0;
+}
+
+
+/* Size - Shrink
+-------------------------------------------------- */
+@include responsiveSizes('size', 'shrink') {
+	flex-grow: 0;
+	flex-shrink: 1;
+}
+
+
+/* Size - Even
+-------------------------------------------------- */
+@include responsiveSizes('size', 'even') {
+	flex: 1;
+	flex-grow: 1;
+	flex-shrink: 1;
+}

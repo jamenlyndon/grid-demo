@@ -1,0 +1,77 @@
+/* Imports
+---------------------------------------------------------------------------------------------------- */
+@use './variables' as v;
+
+
+
+/* General
+---------------------------------------------------------------------------------------------------- */
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+html,
+body {
+	min-width: 320px;
+	font-family: sans-serif;
+	padding: v.$gap_5;
+
+	@media (max-width: v.$breakpoint-l) {
+		padding: v.$gap_3;
+	}
+
+	@media (max-width: v.$breakpoint-m) {
+		padding: v.$gap_2;
+	}
+}
+
+
+
+/* Basic styles for the page demo
+---------------------------------------------------------------------------------------------------- */
+// Headings
+h1 {
+	font-size: 32px;
+	margin-bottom: v.$gap_4;
+}
+
+h2 {
+	font-size: 24px;
+	margin-top: v.$gap_5;
+	margin-bottom: v.$gap_2;
+}
+
+
+// Info area
+.info {
+	border: 1px solid #aaaaaa;
+	background: #eeeeee;
+	border-radius: v.$gap_1;
+	padding: v.$gap_3;
+	margin-bottom: v.$gap_5;
+	font-size: 16px;
+}
+
+
+// Grids
+div:not(.info) {
+	background: rgba(0, 0, 0, .1);
+	border-radius: v.$gap_1;
+	transition: background .2s ease;
+	overflow: hidden;
+
+	&:hover {
+		background: rgba(0, 0, 0, .15);
+	}
+
+	p {
+		padding: v.$gap_2;
+		font-size: 16px;
+	}
+}
+
+body > div {
+	padding: v.$gap_2;
+}
