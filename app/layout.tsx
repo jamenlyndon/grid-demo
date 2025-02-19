@@ -25,7 +25,7 @@ export default function RootLayout() {
 					<br />
 					All of the available options shown below can also be configured to change responsively (not included in this demo).<br />
 					<br />
-					For usage documentation, check out the <a href='#' target='_blank'>grid component code</a> in the Github repo.
+					For usage documentation, check out the <a href='https://github.com/jamenlyndon/grid-demo/blob/main/app/components/grid/index.tsx' target='_blank'>grid component code</a> in the Github repo.
 				</div>
 
 
